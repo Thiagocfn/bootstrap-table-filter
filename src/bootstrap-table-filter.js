@@ -98,7 +98,7 @@
         },
         onSubmit: function(data) {
             return false;
-        },
+        }
     };
 
     BootstrapTableFilter.EVENTS = {
@@ -204,8 +204,8 @@
     BootstrapTableFilter.prototype.init = function() {
         this.initContainer();
         this.initMainButton();
-        this.initFilters();
         this.initRefreshButton();
+        this.initFilters();
         this.initFilterSelector();
         this.initExternals();
     };
@@ -342,7 +342,7 @@
         $.each(BootstrapTableFilter.EXTERNALS, function(i, ext) {
             ext.call(that);
         });
-    }
+    };
 
     BootstrapTableFilter.prototype.getFilter = function(field) {
         if (typeof this.filters[field] === 'undefined') {
@@ -386,11 +386,12 @@
         var that = this;
         var filter = this.getFilter(field);
         cls = cls || '';
+        var checkboxInvisible = (data && data.length && data.length === 1);
         var option, checked;
         $.each(data, function(i, row) {
             option = rowId(i, row);
             checked = that.isSelected(field, option);
-            filter.$dropdownList.append($('<li data-val="' + option + '" class="' + cls + '"><a href="javascript:void(0)"><input type="checkbox" class="filter-enabled"' + (checked ? ' checked' : '') + '> ' + rowLabel(row) + '</a></li>'));
+            filter.$dropdownList.append($('<li data-val="' + option + '" class="' + cls + '"><div class="form-group" style="margin-left: 5px; margin-right: 5px;"> <input type="checkbox" class="filter-enabled ' + (checkboxInvisible ? 'hidden' : '') + '" id="' + field + '-' + option + '"' + (checked ? ' checked' : '') + '> <label for="' + field + '-' + option + '"> ' + rowLabel(row) + '</label></div></li>'));
         });
     };
 
